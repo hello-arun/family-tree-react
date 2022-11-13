@@ -178,9 +178,7 @@
                 {
                     "partnerId": "e163eeea-3b24-cc80-436f-d969d8718fb5",
                     "direction": "to",
-                    "children": [
-                        "ebd69f01-bbb2-725f-75a6-ebd98b525965"
-                    ]
+                    "children": ["ebd69f01-bbb2-725f-75a6-ebd98b525965"]
                 }
             ]
         },
@@ -195,9 +193,7 @@
                 {
                     "partnerId": "652b3f9d-33d7-6dc1-2977-8b4b1c768a18",
                     "direction": "from",
-                    "children": [
-                        "ebd69f01-bbb2-725f-75a6-ebd98b525965"
-                    ]
+                    "children": ["ebd69f01-bbb2-725f-75a6-ebd98b525965"]
                 }
             ]
         },
@@ -248,9 +244,7 @@
                 {
                     "partnerId": "511cd389-d861-709c-6024-a6511ad230f5",
                     "direction": "to",
-                    "children": [
-                        "8a5d47a9-8f0f-4cd8-5937-3ec5666430fc"
-                    ]
+                    "children": ["8a5d47a9-8f0f-4cd8-5937-3ec5666430fc"]
                 }
             ]
         },
@@ -410,9 +404,7 @@
                 {
                     "partnerId": "25440159-fa52-13e0-9f03-a673cb751f4a",
                     "direction": "from",
-                    "children": [
-                        "8a5d47a9-8f0f-4cd8-5937-3ec5666430fc"
-                    ]
+                    "children": ["8a5d47a9-8f0f-4cd8-5937-3ec5666430fc"]
                 }
             ]
         },
@@ -493,9 +485,7 @@
                 {
                     "partnerId": "87ddc0b5-fed8-4b4c-b09f-087e150679a0",
                     "direction": "to",
-                    "children": [
-                        "e49150c9-5f83-2c5e-0293-b9b1c8af8b73"
-                    ]
+                    "children": ["e49150c9-5f83-2c5e-0293-b9b1c8af8b73"]
                 }
             ]
         },
@@ -590,9 +580,7 @@
                 {
                     "partnerId": "b0e805a2-94ce-de58-4e8d-aab0af39b3f6",
                     "direction": "from",
-                    "children": [
-                        "e49150c9-5f83-2c5e-0293-b9b1c8af8b73"
-                    ]
+                    "children": ["e49150c9-5f83-2c5e-0293-b9b1c8af8b73"]
                 }
             ]
         },
@@ -676,11 +664,11 @@
                     "partnerId": "7a78e950-649e-4b4d-626f-46a7a8f921a6",
                     "direction": "to",
                     "children": [
-                        "40934591-ff2a-61be-8a30-75787cd7992d",
-                        "cfddfdd3-6004-df22-3990-b5e1e5887986",
                         "51ef5070-7492-4af0-b1fc-7a3b1faa07fe",
                         "337b7a96-ee63-2c74-52fc-cbf23182b2b6",
-                        "d69a67a2-7650-0514-47f7-e6adca676821"
+                        "d69a67a2-7650-0514-47f7-e6adca676821",
+                        "cfddfdd3-6004-df22-3990-b5e1e5887986",
+                        "40934591-ff2a-61be-8a30-75787cd7992d"
                     ]
                 }
             ]
@@ -820,9 +808,7 @@
                 {
                     "partnerId": "80fea144-2a5a-c18e-6825-364014c8703e",
                     "direction": "to",
-                    "children": [
-                        "ee1cc6d1-7019-7970-90cd-7b157f463bf1"
-                    ]
+                    "children": ["ee1cc6d1-7019-7970-90cd-7b157f463bf1"]
                 }
             ]
         },
@@ -892,9 +878,7 @@
                 {
                     "partnerId": "76856f69-2664-101c-6feb-44d1a95f6c05",
                     "direction": "from",
-                    "children": [
-                        "ee1cc6d1-7019-7970-90cd-7b157f463bf1"
-                    ]
+                    "children": ["ee1cc6d1-7019-7970-90cd-7b157f463bf1"]
                 }
             ]
         },
@@ -1045,9 +1029,7 @@
                 {
                     "partnerId": "67823dfb-961d-eaae-849f-b6f48056a083",
                     "direction": "from",
-                    "children": [
-                        "630b57cd-1cc5-7291-9578-149526158c16"
-                    ]
+                    "children": ["630b57cd-1cc5-7291-9578-149526158c16"]
                 }
             ]
         },
@@ -1062,9 +1044,7 @@
                 {
                     "partnerId": "ac3c67c2-06f1-b9c6-3509-b336454d08c8",
                     "direction": "to",
-                    "children": [
-                        "630b57cd-1cc5-7291-9578-149526158c16"
-                    ]
+                    "children": ["630b57cd-1cc5-7291-9578-149526158c16"]
                 }
             ]
         },
@@ -1159,9 +1139,7 @@
                 {
                     "partnerId": "b1b9e1bd-e493-27fd-7958-6dc6b7796edd",
                     "direction": "to",
-                    "children": [
-                        "1d5a9b99-2af0-6df8-f86e-2134ec5f1722"
-                    ]
+                    "children": ["1d5a9b99-2af0-6df8-f86e-2134ec5f1722"]
                 }
             ]
         },
@@ -1240,9 +1218,7 @@
                 {
                     "partnerId": "89a5b990-fcbe-b169-1a0a-6b02d4fe23ed",
                     "direction": "from",
-                    "children": [
-                        "1d5a9b99-2af0-6df8-f86e-2134ec5f1722"
-                    ]
+                    "children": ["1d5a9b99-2af0-6df8-f86e-2134ec5f1722"]
                 }
             ]
         },
