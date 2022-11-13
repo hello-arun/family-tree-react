@@ -7,10 +7,11 @@ import setting from "../data/setting.json";
 // import CurvedText from "./curvedText";
 class Board extends Component {
     state = {
-        members: this.loadData2(),
+        members: this.loadData(),
+        footerNote: "Focus here for info!!!",
     };
 
-    loadData2() {
+    loadData() {
         const persons = genome.persons;
         const { rootId, gens } = setting;
         return this.getGenerations(persons, rootId, gens);
@@ -66,27 +67,34 @@ class Board extends Component {
             }
             level++;
         }
-        console.log(members);
+        // console.log(members);
         return members;
     }
-
+    displayInfo = (personName) => {
+        const members = this.state.members;
+        this.setState({ members: members, footerNote: personName });
+    };
     render() {
         // console.log(this.getGenerations(genome.persons, setting.rootId));
         const { members } = this.state;
         return (
-            <div width="100%" height="100vh">
-                <svg width="4000" height="1000" className="center">
-                    <g transform="translate(2000 750)">
-                        {members.map((member) => (
-                            <Disc
-                                key={member.id}
-                                discParams={member.discParams}
-                                name={member.name}
-                            />
-                        ))}
-                    </g>
-                </svg>
-            </div>
+            <React.Fragment>
+                <div className="grid-item-tree">
+                    <svg width="4000" height="1000" className="svg-tree">
+                        <g transform="translate(2000 750)">
+                            {members.map((member) => (
+                                <Disc
+                                    key={member.id}
+                                    discParams={member.discParams}
+                                    name={member.name}
+                                    onFocus={this.displayInfo}
+                                />
+                            ))}
+                        </g>
+                    </svg>
+                </div>
+                <div className="grid-item-footer">{this.state.footerNote}</div>
+            </React.Fragment>
         );
     }
 }

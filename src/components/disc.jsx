@@ -1,11 +1,19 @@
 import React, { Component } from "react";
 class Disc extends Component {
-    state = {};
+    state = {
+        focused: false,
+    };
 
     onClick = () => {
         console.log(this.props.name);
     };
+
+    changeState = (isFocused) => {
+        // console.log(isFocused)
+        this.setState({ focused: isFocused });
+    };
     render() {
+        const classFocussed = this.state.focused ? "focused" : "";
         const { rl, rh, theta: th, phi, x, y, id } = this.props.discParams;
         const { name } = this.props;
         const { sin, cos, PI } = Math;
@@ -18,16 +26,29 @@ class Disc extends Component {
         ];
         const d = `M${rl},0  A${rl},${rl} 0 0 0 ${p2[0]},${p2[1]}, L${p3[0]} ${p3[1]} A${rh} ${rh} 0,0,1, ${rh} 0z`;
         return (
-            <g>
-                <g transform={`translate(${x} ${y}) rotate(${phi} 0 0)`}>
+            <g
+                onMouseEnter={() => {
+                    this.changeState(true);
+                    this.props.onFocus(name)
+                }}
+                onMouseLeave={() => {
+                    this.changeState(false);
+                    this.props.onFocus("Focus here for info!!!")
+
+                }}
+                onClick={this.onClick}
+            >
+                <g
+                    transform={`translate(${x} ${y}) rotate(${phi} 0 0)`}
+                    className={"svg-disc " + classFocussed}
+                >
                     <path
                         d={d}
-                        fill="#F7A4A4"
-                        strokeWidth="5"
-                        stroke="white"
-                        cursor="pointer"
+                        // fill="#F7A4A4"
+                        // strokeWidth="5"
+                        // stroke="white"
+                        // cursor="pointer"
                         title={name}
-                        onClick={this.onClick}
                     />
                 </g>
 
@@ -36,13 +57,11 @@ class Disc extends Component {
                         d={`M ${p4[0]},${p4[1]}   A${(rl + rh) * 0.5},${
                             (rl + rh) * 0.5
                         } 0 0 1 ${(rl + rh) * 0.5},0`}
-                        stroke="black"
-                        strokeWidth={0}
                         id={id}
                         fill="None"
                     ></path>
                     <text
-                        width="500"
+                        className="svg-disc-text"
                         dominantBaseline="middle"
                         textAnchor="middle"
                     >

@@ -51,3 +51,18 @@ You don't have to ever use `eject`. The curated feature set is suitable for smal
 
 ### burkeholland.simple-react-snippets
 ### esbenp.prettier-vscode
+
+## color palette
+- https://colorpalettes.net/color-palette-4563/
+#E8E1DB
+#A9AC5D
+#6D6C3C
+#3A3C26
+#362E23
+- https://colorhunt.co/palette/eff5f5d6e4e5497174eb6440
+```
+#EFF5F5
+#D6E4E5
+#497174
+#EB6440
+```
