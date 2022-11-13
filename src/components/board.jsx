@@ -74,17 +74,19 @@ class Board extends Component {
         // console.log(this.getGenerations(genome.persons, setting.rootId));
         const { members } = this.state;
         return (
-            <svg width="100%" height="100vh" >
-                <g transform="translate(750 600)">
-                    {members.map((member) => (
-                        <Disc
-                            key={member.id}
-                            discParams={member.discParams}
-                            name={member.name}
-                        />
-                    ))}
-                </g>
-            </svg>
+            <div width="100%" height="100vh">
+                <svg width="4000" height="1000" className="center">
+                    <g transform="translate(2000 750)">
+                        {members.map((member) => (
+                            <Disc
+                                key={member.id}
+                                discParams={member.discParams}
+                                name={member.name}
+                            />
+                        ))}
+                    </g>
+                </svg>
+            </div>
         );
     }
 }
