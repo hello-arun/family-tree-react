@@ -52,7 +52,7 @@ class Board extends Component {
                         rl: 150 + 50 * level,
                         rh: 200 + 50 * level,
                         theta: 180 / level_size,
-                        phi: -num * (180 / level_size),
+                        phi: num * (180 / level_size),
                         x: 0,
                         y: 0,
                     },
@@ -80,7 +80,7 @@ class Board extends Component {
         const numpeople = members.length;
         if (person.id) {
             const allocatedSpace = ((175 + 50 * level) * 3.14) / numpeople;
-            const minimumReqSpace = 80;
+            const minimumReqSpace = 90;
             if (allocatedSpace < minimumReqSpace) {
                 const req_theta =
                     (180 * minimumReqSpace) / ((175 + 50 * level) * 3.14);
@@ -91,11 +91,11 @@ class Board extends Component {
                     if (members[i].id === person.id) {
                         members[i].discParams.phi = last_phi;
                         members[i].discParams.theta = req_theta;
-                        last_phi -= req_theta;
+                        last_phi += req_theta;
                     } else {
                         members[i].discParams.phi = last_phi;
                         members[i].discParams.theta = theta_per_person;
-                        last_phi -= theta_per_person;
+                        last_phi += theta_per_person;
                     }
                 }
             }
@@ -106,7 +106,7 @@ class Board extends Component {
             for (let i = 0; i < members.length; i++) {
                 members[i].discParams.phi = last_phi;
                 members[i].discParams.theta = theta_per_person;
-                last_phi -= theta_per_person;
+                last_phi += theta_per_person;
             }
             generations[level] = members;
         }
@@ -115,26 +115,33 @@ class Board extends Component {
         // console.log("space per person", allocatedSpace);
         let parteners = "|";
 
-        person.relationships && person.relationships.forEach((relation) => {
-            // console.log(relation.partnerId);
-            // console.log(this.getPersonById(genome.persons,relation.partnerId));
+        person.relationships &&
+            person.relationships.forEach((relation) => {
+                // console.log(relation.partnerId);
+                // console.log(this.getPersonById(genome.persons,relation.partnerId));
 
-            parteners = `${parteners}${this.getPersonById(genome.persons,relation.partnerId).name}|`;
-        });
+                parteners = `${parteners}${
+                    this.getPersonById(genome.persons, relation.partnerId).name
+                }|`;
+            });
         const footerNote = person.id
-            ? `Name: ${person.name}, Gender: ${person.sex.toUpperCase()}, Partener(s): ${parteners}`
+            ? `Name: ${
+                  person.name
+              }, Gender: ${person.sex.toUpperCase()}, Partener(s): ${parteners}`
             : person;
         this.setState({ generations: generations, footerNote: footerNote });
     };
     render() {
         // console.log(this.getGenerations(genome.persons, setting.rootId));
         const { generations } = this.state;
+        const w = 900;
+        const h = 600;
         // console.log(generations);
         return (
             <React.Fragment>
                 <div className="grid-item-tree">
-                    <svg width="4000" height="1000" className="svg-tree">
-                        <g transform="translate(2000 750)">
+                    <svg width={w} height={h} className="svg-tree">
+                        <g transform={`translate(${w / 2} ${h})`}>
                             {generations.map((gen) =>
                                 gen.map((member) => (
                                     <Disc
@@ -150,8 +157,11 @@ class Board extends Component {
                     </svg>
                 </div>
                 <div className="grid-item-info">{this.state.footerNote}</div>
-                <div className="grid-item-footer">Developer: Arun 2022 </div>
-
+                <div className="grid-item-copyright">Developer: Arun</div>
+                <div className="grid-item-footer">
+                    <div>Contact Me: GitHub Twitter LinkedIn E-Mail</div>
+                    <div>2022</div>
+                </div>
             </React.Fragment>
         );
     }

@@ -4,8 +4,6 @@ body,
     margin: 0px;
     height: 100vh;
     overflow: hidden;
-    /* margin-bottom: 10px; */
-    /* pad: 5px; */
 }
 .svg-disc {
     fill: #6d6c3c;
@@ -19,30 +17,27 @@ body,
 }
 .svg-disc-text {
     fill: #e8e1db;
-    /* user-select: inherit; */
     cursor: pointer;
 }
 .grid-container {
     display: grid;
-    grid-template-rows: 25px auto 45px 25px;
+    grid-template-rows: 45px auto 45px 25px 40px;
     grid-template-columns: auto;
     grid-gap: 5px;
     overflow: hidden;
     height: 100vh;
     outline: red 2px dashed;
-    margin-bottom: 10px;
     border: 2px;
 }
 
 .grid-item-header,
 .grid-item-tree,
 .grid-item-info,
-.grid-item-footer {
+.grid-item-copyright {
     /* border: #362e23 1px solid; */
 }
 
 .grid-item-info {
-    color: #362e23;
     font-size: 24px;
 }
 .grid-item-tree {
@@ -52,20 +47,40 @@ body,
 .svg-tree {
     margin: 0;
     position: absolute;
-    top: 50%;
+    bottom: 0%;
     left: 50%;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, 0%);
+    transform: translate(-50%, -5%);
     /* background-color: black; */
 }
 
-.grid-item-footer,
+.grid-item-copyright,
 .grid-item-info,
 .grid-item-header {
     text-align: center;
 }
 
-.grid-item-header{
+.grid-item-footer,
+.grid-item-header {
+    background-color: #3a3c26;
+}
+
+.centered-text {
+    margin: 0;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
     font-size: 24px;
-    padding-top: 20px;
+    color: #e8e1db;
+    /* background-color: black; */
+}
+.grid-item-header {
+    position: relative;
+}
+
+.grid-item-footer{
+    text-align: center;
+    color: #e8e1db;
 }

@@ -18,24 +18,28 @@ class Disc extends Component {
         const { name } = this.props;
         const { sin, cos, PI } = Math;
         const deg = PI / 180;
-        const p2 = [rl * cos(th * deg), -rl * sin(th * deg)];
-        const p3 = [rh * cos(th * deg), -rh * sin(th * deg)];
+        const p2 = [rl * cos(th * deg), rl * sin(th * deg)];
+        const p3 = [rh * cos(th * deg), rh * sin(th * deg)];
         const p4 = [
             (rl + rh) * 0.5 * cos(th * deg),
-            -(rl + rh) * 0.5 * sin(th * deg),
+            (rl + rh) * 0.5 * sin(th * deg),
         ];
-        const d = `M${rl},0  A${rl},${rl} 0 0 0 ${p2[0]},${p2[1]}, L${p3[0]} ${p3[1]} A${rh} ${rh} 0,0,1, ${rh} 0z`;
+        const d = `M${rl},0  A${rl},${rl} 0 0 1 ${p2[0]},${p2[1]}, L${p3[0]} ${p3[1]} A${rh} ${rh} 0,0,0, ${rh} 0z`;
         return (
             <g
                 onMouseEnter={() => {
                     this.changeState(true);
-                    this.props.onFocus(this.props.person,this.props.level);
+                    this.props.onFocus(this.props.person, this.props.level);
                 }}
                 onMouseLeave={() => {
                     this.changeState(false);
-                    this.props.onFocus("Focus here for info!!!",this.props.level);
+                    this.props.onFocus(
+                        "Focus here for info!!!",
+                        this.props.level
+                    );
                 }}
                 onClick={this.onClick}
+                transform={"rotate(180)"}
             >
                 <g
                     transform={`translate(${x} ${y}) rotate(${phi} 0 0)`}
@@ -53,9 +57,9 @@ class Disc extends Component {
 
                 <g transform={`translate(${x} ${y}) rotate(${phi} 0 0)`}>
                     <path
-                        d={`M ${p4[0]},${p4[1]}   A${(rl + rh) * 0.5},${
+                        d={`M ${(rl + rh) * 0.5},0 A${(rl + rh) * 0.5},${
                             (rl + rh) * 0.5
-                        } 0 0 1 ${(rl + rh) * 0.5},0`}
+                        } 0 0 1 ${p4[0]},${p4[1]}`}
                         id={id}
                         fill="None"
                     ></path>
