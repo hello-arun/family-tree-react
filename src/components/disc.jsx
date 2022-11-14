@@ -5,7 +5,7 @@ class Disc extends Component {
     };
 
     onClick = () => {
-        console.log(this.props.name);
+        console.log(this.props);
     };
 
     changeState = (isFocused) => {
@@ -29,12 +29,11 @@ class Disc extends Component {
             <g
                 onMouseEnter={() => {
                     this.changeState(true);
-                    this.props.onFocus(name)
+                    this.props.onFocus(this.props.person,this.props.level);
                 }}
                 onMouseLeave={() => {
                     this.changeState(false);
-                    this.props.onFocus("Focus here for info!!!")
-
+                    this.props.onFocus("Focus here for info!!!",this.props.level);
                 }}
                 onClick={this.onClick}
             >
@@ -70,7 +69,7 @@ class Disc extends Component {
                             alignmentBaseline="bottom"
                             href={`#${id}`}
                         >
-                            {name}
+                            {this.props.person.name}
                         </textPath>
                     </text>
                 </g>

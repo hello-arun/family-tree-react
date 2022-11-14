@@ -7,7 +7,7 @@ import setting from "../data/setting.json";
 // import CurvedText from "./curvedText";
 class Board extends Component {
     state = {
-        members: this.loadData(),
+        generations: this.loadData(),
         footerNote: "Focus here for info!!!",
     };
 
@@ -28,28 +28,31 @@ class Board extends Component {
     }
 
     getGenerations(persons, rootId, maxlevel = 1) {
+        let generations = [];
+        let members = [];
         let level = 0;
         let currentNode = this.getPersonById(persons, rootId);
         // console.log(currentNode)
         let queue = [];
-        let members = [];
         queue.push(currentNode);
 
         while (queue.length && level < maxlevel) {
             let level_size = queue.length;
             let num = 0;
+            members = [];
             while (num < level_size) {
                 currentNode = queue.shift();
                 // console.log(currentNode.id)
                 members.push({
                     id: currentNode.id,
-                    name: currentNode.name,
+                    person: currentNode,
+                    level: level,
                     discParams: {
                         id: currentNode.id,
                         rl: 150 + 50 * level,
                         rh: 200 + 50 * level,
                         theta: 180 / level_size,
-                        phi: -(num * 180) / level_size,
+                        phi: -num * (180 / level_size),
                         x: 0,
                         y: 0,
                     },
@@ -65,31 +68,85 @@ class Board extends Component {
                 }
                 num++;
             }
+            generations.push([...members]);
             level++;
         }
-        // console.log(members);
-        return members;
+        // console.log(generations);
+        return generations;
     }
-    displayInfo = (personName) => {
-        const members = this.state.members;
-        this.setState({ members: members, footerNote: personName });
+    handleFocus = (person, level = 0) => {
+        const generations = [...this.state.generations];
+        const members = [...generations[level]];
+        const numpeople = members.length;
+        if (person.id) {
+            const allocatedSpace = ((175 + 50 * level) * 3.14) / numpeople;
+            const minimumReqSpace = 80;
+            if (allocatedSpace < minimumReqSpace) {
+                const req_theta =
+                    (180 * minimumReqSpace) / ((175 + 50 * level) * 3.14);
+                const available_theta = 180 - req_theta;
+                const theta_per_person = available_theta / (numpeople - 1);
+                let last_phi = 0;
+                for (let i = 0; i < members.length; i++) {
+                    if (members[i].id === person.id) {
+                        members[i].discParams.phi = last_phi;
+                        members[i].discParams.theta = req_theta;
+                        last_phi -= req_theta;
+                    } else {
+                        members[i].discParams.phi = last_phi;
+                        members[i].discParams.theta = theta_per_person;
+                        last_phi -= theta_per_person;
+                    }
+                }
+            }
+            generations[level] = members;
+        } else {
+            const theta_per_person = 180 / numpeople;
+            let last_phi = 0;
+            for (let i = 0; i < members.length; i++) {
+                members[i].discParams.phi = last_phi;
+                members[i].discParams.theta = theta_per_person;
+                last_phi -= theta_per_person;
+            }
+            generations[level] = members;
+        }
+        // this.setState({generations:generations})
+        // console.log("person", numpeople);
+        // console.log("space per person", allocatedSpace);
+        let parteners = "|";
+
+        person.relationships && person.relationships.forEach((relation) => {
+            // console.log(relation.partnerId);
+            // console.log(this.getPersonById(genome.persons,relation.partnerId));
+
+            parteners = `${parteners}${this.getPersonById(genome.persons,relation.partnerId).name}|`;
+        });
+        console.log(parteners);
+        const footerNote = person.id
+            ? `"Name: ${person.name}, Gender: ${person.sex.toUpperCase()}, Partener(s): ${parteners}`
+            : person;
+        this.setState({ generations: generations, footerNote: footerNote });
     };
     render() {
         // console.log(this.getGenerations(genome.persons, setting.rootId));
-        const { members } = this.state;
+        const { generations } = this.state;
+        // console.log(generations);
         return (
             <React.Fragment>
                 <div className="grid-item-tree">
                     <svg width="4000" height="1000" className="svg-tree">
                         <g transform="translate(2000 750)">
-                            {members.map((member) => (
-                                <Disc
-                                    key={member.id}
-                                    discParams={member.discParams}
-                                    name={member.name}
-                                    onFocus={this.displayInfo}
-                                />
-                            ))}
+                            {generations.map((gen) =>
+                                gen.map((member) => (
+                                    <Disc
+                                        key={member.id}
+                                        discParams={member.discParams}
+                                        person={member.person}
+                                        level={member.level}
+                                        onFocus={this.handleFocus}
+                                    />
+                                ))
+                            )}
                         </g>
                     </svg>
                 </div>
