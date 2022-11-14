@@ -5,7 +5,7 @@ const root = ReactDOM.createRoot(document.getElementById('root')); // Define roo
 root.render(
     <div className='main grid-container'>
         <div className='grid-item-header'>
-            © Arun 2022, Kakhwal Tree
+            Kakhwal Family Tree
         </div>
         <Board />
     </div>

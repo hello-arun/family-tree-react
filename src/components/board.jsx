@@ -121,9 +121,8 @@ class Board extends Component {
 
             parteners = `${parteners}${this.getPersonById(genome.persons,relation.partnerId).name}|`;
         });
-        console.log(parteners);
         const footerNote = person.id
-            ? `"Name: ${person.name}, Gender: ${person.sex.toUpperCase()}, Partener(s): ${parteners}`
+            ? `Name: ${person.name}, Gender: ${person.sex.toUpperCase()}, Partener(s): ${parteners}`
             : person;
         this.setState({ generations: generations, footerNote: footerNote });
     };
@@ -150,7 +149,9 @@ class Board extends Component {
                         </g>
                     </svg>
                 </div>
-                <div className="grid-item-footer">{this.state.footerNote}</div>
+                <div className="grid-item-info">{this.state.footerNote}</div>
+                <div className="grid-item-footer">Developer: Arun 2022 </div>
+
             </React.Fragment>
         );
     }
