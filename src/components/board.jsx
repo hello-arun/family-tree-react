@@ -156,11 +156,29 @@ class Board extends Component {
                         </g>
                     </svg>
                 </div>
-                <div className="grid-item-info">{this.state.footerNote}</div>
-                <div className="grid-item-copyright">Developer: Arun</div>
+                <div className="grid-item-info">
+                    <p className=".centered-text">{this.state.footerNote}</p>
+                </div>
                 <div className="grid-item-footer">
-                    <div>Contact Me: GitHub Twitter LinkedIn E-Mail</div>
-                    <div>2022</div>
+                    <div className="contact-info">
+                        <div>
+                            © Arun 2022
+                            <br />
+                            <a
+                                href="https://github.com/hello-arun"
+                                className="links"
+                            >
+                                GitHub
+                            </a>{" "}
+                            <a href="https://twitter.com/jangirarun786">
+                                Twitter
+                            </a>{" "}
+                            <a href="https://www.linkedin.com/in/arun-jangir-ba0921220/">
+                                LinkedIn
+                            </a>{" "}
+                            <a href="mailto:jangirarun786@gmail.com">E-mail</a>
+                        </div>
+                    </div>
                 </div>
             </React.Fragment>
         );

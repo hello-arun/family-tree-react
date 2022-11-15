@@ -34,7 +34,7 @@ class Disc extends Component {
                 onMouseLeave={() => {
                     this.changeState(false);
                     this.props.onFocus(
-                        "Focus here for info!!!",
+                        "Hover over the disk for info!!!",
                         this.props.level
                     );
                 }}
@@ -45,14 +45,7 @@ class Disc extends Component {
                     transform={`translate(${x} ${y}) rotate(${phi} 0 0)`}
                     className={"svg-disc " + classFocussed}
                 >
-                    <path
-                        d={d}
-                        // fill="#F7A4A4"
-                        // strokeWidth="5"
-                        // stroke="white"
-                        // cursor="pointer"
-                        title={name}
-                    />
+                    <path d={d} title={name} />
                 </g>
 
                 <g transform={`translate(${x} ${y}) rotate(${phi} 0 0)`}>

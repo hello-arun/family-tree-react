@@ -3,7 +3,8 @@ body,
     background-color: #e8e1db;
     margin: 0px;
     height: 100vh;
-    overflow: hidden;
+    /* overflow: hidden; */
+    -webkit-tap-highlight-color: transparent;
 }
 .svg-disc {
     fill: #6d6c3c;
@@ -21,7 +22,7 @@ body,
 }
 .grid-container {
     display: grid;
-    grid-template-rows: 45px auto 45px 25px 40px;
+    grid-template-rows: 50px auto 80px 25px 25px;
     grid-template-columns: auto;
     grid-gap: 5px;
     overflow: hidden;
@@ -39,6 +40,7 @@ body,
 
 .grid-item-info {
     font-size: 24px;
+    position: relative;
 }
 .grid-item-tree {
     overflow: hidden;
@@ -50,7 +52,7 @@ body,
     bottom: 0%;
     left: 50%;
     -ms-transform: translate(-50%, 0%);
-    transform: translate(-50%, -5%);
+    transform: translate(-50%, -0%);
     /* background-color: black; */
 }
 
@@ -60,9 +62,12 @@ body,
     text-align: center;
 }
 
-.grid-item-footer,
-.grid-item-header {
+.grid-item-header .title {
     background-color: #3a3c26;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    font-size: 22px;
+    color: #e8e1db;
 }
 
 .centered-text {
@@ -73,14 +78,28 @@ body,
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     font-size: 24px;
-    color: #e8e1db;
+    width: 100%;
     /* background-color: black; */
 }
+
 .grid-item-header {
     position: relative;
 }
-
-.grid-item-footer{
-    text-align: center;
+a {
     color: #e8e1db;
+}
+a:hover {
+    color: aqua;
+}
+.grid-item-footer {
+    color: #e8e1db;
+    background-color: #e8e1db;
+}
+
+.contact-info {
+    text-align: center;
+    background-color: #3a3c26;
+    color: #e8e1db;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
 }
