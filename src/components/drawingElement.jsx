@@ -3,34 +3,22 @@ import React, { Component } from "react";
 class PersonSVG extends Component {
     // state = {};
     render() {
-        // const rFact = 110;
-        // const tFact = 0.51;
-        // const dth = Math.PI / 2;
         const { node } = this.props;
-        // const { x, level } = node;
-        // const r = rFact * level;
-        // const theta = -tFact * x + dth;
-
         const x1 = node.x;
-        //  r * Math.cos(theta);
-        const y1 = node.y
-        // r * Math.sin(theta);
+        const y1 = node.y;
 
         let x2 = null;
         let y2 = null;
         if (node.parent !== null) {
-            // const rP = node.parent.level * rFact;
-            // const tP = -node.parent.x * tFact + dth;
             x2 = node.parent.x;
-            //  rP * Math.cos(tP);
             y2 = node.parent.y;
-            // rP * Math.sin(tP);
         }
         let lineClass = "node-connection ";
         lineClass +=
             node.selected || (node.parent && node.parent.selected)
                 ? "selected"
                 : "";
+        const circleClass = node.parent ? "" : " root-circle";
         return (
             <React.Fragment>
                 if (node.parent!==null)
@@ -40,10 +28,15 @@ class PersonSVG extends Component {
                         y1={y1}
                         x2={x2}
                         y2={y2}
-                        className={lineClass}
+                        className={`${lineClass}`}
                     ></line>
                 }
-                <circle cx={x1} cy={y1} r={5} className={node.person.sex}></circle>
+                <circle
+                    cx={x1}
+                    cy={y1}
+                    r={5}
+                    className={`${node.person.sex}  ${circleClass}`}
+                ></circle>
                 <g transform={`translate(${x1},${y1})`}>
                     <text
                         className="text-name"

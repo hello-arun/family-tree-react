@@ -5,11 +5,12 @@ import setting from "../data/setting.json";
 import { generateNodes, generateTree } from "../helpers/parseGenome";
 import PersonSVG from "./drawingElement";
 import { beautifyTree } from "../helpers/tidyTree";
+import ExtraInfo from "./extraInfo";
 
 class Board extends Component {
     state = {
         rootNode: this.initNodes(),
-        footerNote: "Hover over names for additional info!!!",
+        extraInfoNode: null,
     };
 
     initNodes() {
@@ -50,16 +51,16 @@ class Board extends Component {
     handlePointerEnter = (node) => {
         // const rootNode = rootNode;
         node.selected = true;
-        let footerNote = node.person.name;
-        if (node.parent === null) {
-            footerNote += ", Mother: --, Father: --";
-        } else {
-            footerNote += `, Mother: Smt. ${node.person.mother.name}, Father: Sh. ${node.person.father.name}`;
-        }
+        // let footerNote = node.person.name;
+        // if (node.parent === null) {
+        //     footerNote += ", Mother: --, Father: --";
+        // } else {
+        //     footerNote += `<br />Mother: Smt. ${node.person.mother.name}\nFather: Sh. ${node.person.father.name}`;
+        // }
         // const footerNote = `${node.person.name}, Mother: Smt. ${node.person.mother.name}, Father: Sh. ${node.person.father.name}`;
         this.setState({
             rootNode: this.state.rootNode,
-            footerNote: footerNote,
+            extraInfoNode: node,
         });
     };
     handlePointerLeave = (node) => {
@@ -69,7 +70,7 @@ class Board extends Component {
         // const footerNote = `Name: ${node.person.name}, Mother: ${node.person.mother.name}, Father: ${node.person.father.name}`;
         this.setState({
             rootNode: this.state.rootNode,
-            footerNote: "Hover over names for info!!!",
+            extraInfoNode: null,
         });
     };
 
@@ -94,51 +95,31 @@ class Board extends Component {
     }
 
     render() {
-        const allNodes = this.getNodeArray(this.state.rootNode, 4);
-        const {xmin,xmax,ymin,ymax}= this.calcBounds(allNodes)
-        const margin=40
+        const allNodes = this.getNodeArray(this.state.rootNode, setting.maxLevel);
+        const { xmin, xmax, ymin, ymax } = this.calcBounds(allNodes);
+        const margin = 40;
         return (
             <React.Fragment>
                 <div className="grid-item-tree">
-                    <svg className="svg-tree" id="main-board" viewBox={`${xmin-margin}  ${ymin-margin} ${xmax-xmin+margin*2} ${ymax-ymin+margin*2}`}>
-                        {console.log(document.getElementsByClassName("svg-tree"))}
-                        {/* <g className="svg-tree-group"> */}
-                            {/* <g className="svg-tree-scale"> */}
-                                {allNodes.map((node) => (
-                                    <PersonSVG
-                                        key={node.person.id}
-                                        node={node}
-                                        onPointerEnter={this.handlePointerEnter}
-                                        onPointerLeave={this.handlePointerLeave}
-                                    />
-                                ))}
-                            {/* </g> */}
-                        {/* </g> */}
+                    <svg
+                        className="svg-tree"
+                        id="main-board"
+                        viewBox={`${xmin - margin}  ${ymin - margin} ${
+                            xmax - xmin + margin * 2
+                        } ${ymax - ymin + margin * 2}`}
+                    >
+                        {allNodes.map((node) => (
+                            <PersonSVG
+                                key={node.person.id}
+                                node={node}
+                                onPointerEnter={this.handlePointerEnter}
+                                onPointerLeave={this.handlePointerLeave}
+                            />
+                        ))}
                     </svg>
                 </div>
                 <div className="grid-item-info">
-                    <p className=".centered-text">{this.state.footerNote}</p>
-                </div>
-                <div className="grid-item-footer">
-                    <div className="contact-info">
-                        <div>
-                            © Arun 2022
-                            <br />
-                            <a
-                                href="https://github.com/hello-arun"
-                                className="links"
-                            >
-                                GitHub
-                            </a>{" "}
-                            <a href="https://twitter.com/jangirarun786">
-                                Twitter
-                            </a>{" "}
-                            <a href="https://www.linkedin.com/in/arun-jangir-ba0921220/">
-                                LinkedIn
-                            </a>{" "}
-                            <a href="mailto:jangirarun786@gmail.com">E-mail</a>
-                        </div>
-                    </div>
+                    <ExtraInfo node={this.state.extraInfoNode}></ExtraInfo>
                 </div>
             </React.Fragment>
         );
