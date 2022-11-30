@@ -800,7 +800,7 @@ export const genomeData = [
         "id": "76856f69-2664-101c-6feb-44d1a95f6c05",
         "name": "Om",
         "surname": "",
-        "sex": "f",
+        "sex": "m",
         "description": "",
         "isNode": true,
         "relationships": [

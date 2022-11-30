@@ -91,6 +91,10 @@ circle {
     stroke: var(--color3);
 }
 
+circle.f{
+    fill: rgb(222, 100, 120);
+}
+
 .grid-item-copyright,
 .grid-item-info,
 .grid-item-header {

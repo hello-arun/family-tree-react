@@ -43,7 +43,7 @@ class PersonSVG extends Component {
                         className={lineClass}
                     ></line>
                 }
-                <circle cx={x1} cy={y1} r={5}></circle>
+                <circle cx={x1} cy={y1} r={5} className={node.person.sex}></circle>
                 <g transform={`translate(${x1},${y1})`}>
                     <text
                         className="text-name"
