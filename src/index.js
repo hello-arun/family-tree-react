@@ -6,7 +6,7 @@ root.render(
     <div className='main grid-container'>
         <div className='grid-item-header'>
             <p className='title centered-text'>
-                Kakhwal Family Tree
+                Family Tree
             </p>
         </div>
         <Board />

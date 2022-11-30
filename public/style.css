@@ -1,25 +1,30 @@
-body,
-#root {
-    background-color: #e8e1db;
-    margin: 0px;
-    height: 100vh;
-    /* overflow: hidden; */
-    -webkit-tap-highlight-color: transparent;
-}
-.svg-disc {
-    fill: #6d6c3c;
-    stroke-width: 5;
-    stroke: #e8e1db;
-    cursor: pointer;
+:root {
+    /*https://coolors.co/cae7b9-f3de8a-eb9486-7e7f9a-97a7b3  */
+    --color1: #e8e1db;
+    --color2: #a9ac5d;
+    --color3: #6d6c3c;
+    --color4: #3a3c26;
+    --color5: #362e23;
+
+    /* https://colorpalettes.net/color-palette-4568/ */
+
+    /* --color1: #C8D2D1;
+    --color3: #14471E;
+    --color2: #EE9B01;
+    --color5: #DA6A00;
+    --color4: #68904D; */
 }
 
-.svg-disc.focused {
-    fill: #3a3c26;
+body,
+#root {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    /* "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; */
+    background-color: var(--color1);
+    margin: 0px;
+    height: 100vh;
+    -webkit-tap-highlight-color: transparent;
 }
-.svg-disc-text {
-    fill: #e8e1db;
-    cursor: pointer;
-}
+
 .grid-container {
     display: grid;
     grid-template-rows: 50px auto 80px 25px 25px;
@@ -31,15 +36,8 @@ body,
     border: 2px;
 }
 
-.grid-item-header,
-.grid-item-tree,
-.grid-item-info,
-.grid-item-copyright {
-    /* border: #362e23 1px solid; */
-}
-
 .grid-item-info {
-    font-size: 24px;
+    font-size: 20px;
     position: relative;
 }
 .grid-item-tree {
@@ -49,11 +47,48 @@ body,
 .svg-tree {
     margin: 0;
     position: absolute;
-    bottom: 0%;
-    left: 50%;
-    -ms-transform: translate(-50%, 0%);
-    transform: translate(-50%, -0%);
-    /* background-color: black; */
+    width: 100%;
+    height: 100%;
+}
+
+.svg-tree-group {
+    transform: translate(50%, 51%);
+}
+text{
+    user-select: none;
+}
+.svg-tree-scale {
+    scale: 0.85;
+    overflow: scroll;
+}
+
+.node-connection {
+    stroke: var(--color3);
+    opacity: 0.4;
+    transition: stroke 0.3s, opacity 0.3s;
+}
+
+.node-connection.selected {
+    stroke: var(--color5);
+    opacity: 1.0;
+}
+
+.text-name {
+    fill: var(--color4);
+    font-size: 20px;
+    font-weight: 500;
+    text-anchor: middle;
+    transform: translate(0, -0.5rem);
+    cursor: pointer;
+    transition: font-size 0.2s;
+}
+
+.text-name:hover {
+    font-size: 24px;
+}
+circle {
+    fill: var(--color2);
+    stroke: var(--color3);
 }
 
 .grid-item-copyright,
@@ -63,11 +98,11 @@ body,
 }
 
 .grid-item-header .title {
-    background-color: #3a3c26;
+    background-color: var(--color4);
+    color: var(--color1);
     padding-top: 0.5em;
     padding-bottom: 0.5em;
     font-size: 22px;
-    color: #e8e1db;
 }
 
 .centered-text {
@@ -93,13 +128,13 @@ a:hover {
 }
 .grid-item-footer {
     color: #e8e1db;
-    background-color: #e8e1db;
+    background-color: var(--color4);
 }
 
 .contact-info {
     text-align: center;
-    background-color: #3a3c26;
-    color: #e8e1db;
+    background-color: var(--color4);
+    color: var(--color1);
     padding-top: 0.5em;
     padding-bottom: 0.5em;
 }

@@ -1,159 +1,119 @@
 // This is an SVG element where all the drawing will happen
 // based on the JSON Tree Structure
 import React, { Component } from "react";
-import Disc from "./disc";
-import genome from "../data/genome.json";
 import setting from "../data/setting.json";
-// import CurvedText from "./curvedText";
+import { generateNodes, generateTree } from "../helpers/parseGenome";
+import PersonSVG from "./drawingElement";
+import { beautifyTree } from "../helpers/tidyTree";
+
 class Board extends Component {
     state = {
-        generations: this.loadData(),
-        footerNote: "Focus here for info!!!",
+        rootNode: this.initNodes(),
+        footerNote: "Hover over names for additional info!!!",
     };
 
-    loadData() {
-        const persons = genome.persons;
-        const { rootId, gens } = setting;
-        return this.getGenerations(persons, rootId, gens);
+    initNodes() {
+        // console.log("Gi");
+        const { rootId, maxLevel } = setting;
+        let person = generateTree(rootId, maxLevel);
+        let rootNode = generateNodes(person, maxLevel);
+        beautifyTree(rootNode);
+        // console.log(rootNode);
+
+        return rootNode;
     }
 
-    getPersonById(persons, id) {
-        for (let i = 0; i < persons.length; i++) {
-            const person = persons[i];
-            if (person.id === id) {
-                return person;
-            }
-        }
-        return null;
-    }
-
-    getGenerations(persons, rootId, maxlevel = 1) {
-        let generations = [];
-        let members = [];
+    getNodeArray(rootNode, maxLevel) {
+        // console.log(rootNode);
+        let allNodes = [rootNode];
         let level = 0;
-        let currentNode = this.getPersonById(persons, rootId);
-        // console.log(currentNode)
-        let queue = [];
-        queue.push(currentNode);
-
-        while (queue.length && level < maxlevel) {
-            let level_size = queue.length;
-            let num = 0;
-            members = [];
-            while (num < level_size) {
-                currentNode = queue.shift();
-                // console.log(currentNode.id)
-                members.push({
-                    id: currentNode.id,
-                    person: currentNode,
-                    level: level,
-                    discParams: {
-                        id: currentNode.id,
-                        rl: 150 + 50 * level,
-                        rh: 200 + 50 * level,
-                        theta: 180 / level_size,
-                        phi: num * (180 / level_size),
-                        x: 0,
-                        y: 0,
-                    },
+        let toExpand = [rootNode];
+        while (level < maxLevel) {
+            let toExpandNext = [];
+            toExpand.forEach((node) => {
+                if (node.isLeaf()) {
+                    return;
+                }
+                node.children.forEach((child) => {
+                    allNodes.push(child);
+                    toExpandNext.push(child);
                 });
-
-                // members.push(currentNode.name);
-                if (currentNode.relationships) {
-                    currentNode.relationships.forEach((relation) => {
-                        relation.children.forEach((id) => {
-                            queue.push(this.getPersonById(persons, id));
-                        });
-                    });
-                }
-                num++;
-            }
-            generations.push([...members]);
-            level++;
-        }
-        // console.log(generations);
-        return generations;
-    }
-    handleFocus = (person, level = 0) => {
-        const generations = [...this.state.generations];
-        const members = [...generations[level]];
-        const numpeople = members.length;
-        if (person.id) {
-            const allocatedSpace = ((175 + 50 * level) * 3.14) / numpeople;
-            const minimumReqSpace = 90;
-            if (allocatedSpace < minimumReqSpace) {
-                const req_theta =
-                    (180 * minimumReqSpace) / ((175 + 50 * level) * 3.14);
-                const available_theta = 180 - req_theta;
-                const theta_per_person = available_theta / (numpeople - 1);
-                let last_phi = 0;
-                for (let i = 0; i < members.length; i++) {
-                    if (members[i].id === person.id) {
-                        members[i].discParams.phi = last_phi;
-                        members[i].discParams.theta = req_theta;
-                        last_phi += req_theta;
-                    } else {
-                        members[i].discParams.phi = last_phi;
-                        members[i].discParams.theta = theta_per_person;
-                        last_phi += theta_per_person;
-                    }
-                }
-            }
-            generations[level] = members;
-        } else {
-            const theta_per_person = 180 / numpeople;
-            let last_phi = 0;
-            for (let i = 0; i < members.length; i++) {
-                members[i].discParams.phi = last_phi;
-                members[i].discParams.theta = theta_per_person;
-                last_phi += theta_per_person;
-            }
-            generations[level] = members;
-        }
-        // this.setState({generations:generations})
-        // console.log("person", numpeople);
-        // console.log("space per person", allocatedSpace);
-        let parteners = "|";
-
-        person.relationships &&
-            person.relationships.forEach((relation) => {
-                // console.log(relation.partnerId);
-                // console.log(this.getPersonById(genome.persons,relation.partnerId));
-
-                parteners = `${parteners}${
-                    this.getPersonById(genome.persons, relation.partnerId).name
-                }|`;
             });
-        const footerNote = person.id
-            ? `Name: ${
-                  person.name
-              }, Gender: ${person.sex.toUpperCase()}, Partener(s): ${parteners}`
-            : person;
-        this.setState({ generations: generations, footerNote: footerNote });
+            level += 1;
+            toExpand = [...toExpandNext];
+        }
+        toExpand = null;
+        // console.log(allNodes);
+        return allNodes;
+    }
+
+    handlePointerEnter = (node) => {
+        // const rootNode = rootNode;
+        node.selected = true;
+        let footerNote = node.person.name;
+        if (node.parent === null) {
+            footerNote += ", Mother: --, Father: --";
+        } else {
+            footerNote += `, Mother: Smt. ${node.person.mother.name}, Father: Sh. ${node.person.father.name}`;
+        }
+        // const footerNote = `${node.person.name}, Mother: Smt. ${node.person.mother.name}, Father: Sh. ${node.person.father.name}`;
+        this.setState({
+            rootNode: this.state.rootNode,
+            footerNote: footerNote,
+        });
     };
+    handlePointerLeave = (node) => {
+        node.selected = false;
+
+        // const rootNode = rootNode;
+        // const footerNote = `Name: ${node.person.name}, Mother: ${node.person.mother.name}, Father: ${node.person.father.name}`;
+        this.setState({
+            rootNode: this.state.rootNode,
+            footerNote: "Hover over names for info!!!",
+        });
+    };
+
+    calcBounds(allNodes) {
+        let xmin = allNodes[0].x;
+        let ymin = allNodes[0].y;
+        let xmax = xmin;
+        let ymax = ymin;
+        allNodes.forEach((node) => {
+            xmin = node.x < xmin ? node.x : xmin;
+            xmax = node.x > xmax ? node.x : xmax;
+
+            ymin = node.y < ymin ? node.y : ymin;
+            ymax = node.y > ymax ? node.y : ymax;
+        });
+        return {
+            xmin: xmin,
+            xmax: xmax,
+            ymin: ymin,
+            ymax: ymax,
+        };
+    }
+
     render() {
-        // console.log(this.getGenerations(genome.persons, setting.rootId));
-        const { generations } = this.state;
-        const w = 900;
-        const h = 600;
-        // console.log(generations);
+        const allNodes = this.getNodeArray(this.state.rootNode, 4);
+        const {xmin,xmax,ymin,ymax}= this.calcBounds(allNodes)
+        const margin=40
         return (
             <React.Fragment>
                 <div className="grid-item-tree">
-                    <svg width={w} height={h} className="svg-tree">
-                        <g transform={`translate(${w / 2} ${h})`}>
-                            {generations.map((gen) =>
-                                gen.map((member) => (
-                                    <Disc
-                                        key={member.id}
-                                        discParams={member.discParams}
-                                        person={member.person}
-                                        level={member.level}
-                                        onFocus={this.handleFocus}
+                    <svg className="svg-tree" id="main-board" viewBox={`${xmin-margin}  ${ymin-margin} ${xmax-xmin+margin*2} ${ymax-ymin+margin*2}`}>
+                        {console.log(document.getElementsByClassName("svg-tree"))}
+                        {/* <g className="svg-tree-group"> */}
+                            {/* <g className="svg-tree-scale"> */}
+                                {allNodes.map((node) => (
+                                    <PersonSVG
+                                        key={node.person.id}
+                                        node={node}
+                                        onPointerEnter={this.handlePointerEnter}
+                                        onPointerLeave={this.handlePointerLeave}
                                     />
-                                ))
-                            )}
-                        </g>
+                                ))}
+                            {/* </g> */}
+                        {/* </g> */}
                     </svg>
                 </div>
                 <div className="grid-item-info">
