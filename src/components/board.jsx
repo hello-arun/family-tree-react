@@ -97,7 +97,7 @@ class Board extends Component {
     render() {
         const allNodes = this.getNodeArray(this.state.rootNode, setting.maxLevel);
         const { xmin, xmax, ymin, ymax } = this.calcBounds(allNodes);
-        const margin = 40;
+        const margin = 50;
         return (
             <React.Fragment>
                 <div className="grid-item-tree">
