@@ -19,6 +19,7 @@ class PersonSVG extends Component {
                 ? "selected"
                 : "";
         const circleClass = node.parent ? "" : " root-circle";
+        const textStyle = node.selected ? "text-name selected" : "text-name";
         return (
             <React.Fragment>
                 if (node.parent!==null)
@@ -39,13 +40,15 @@ class PersonSVG extends Component {
                 ></circle>
                 <g transform={`translate(${x1},${y1})`}>
                     <text
-                        className="text-name"
+                        className={textStyle}
                         x={0}
                         y={0}
-                        onMouseEnter={() => {
+                        onPointerDown={(event) => {
                             this.props.onPointerEnter(node);
                         }}
-                        onMouseLeave={() => this.props.onPointerLeave(node)}
+                        onPointerUp={(event) => {
+                            event.stopPropagation();
+                        }}
                     >
                         {node.person.name}
                     </text>

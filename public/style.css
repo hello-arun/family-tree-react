@@ -28,7 +28,7 @@ body,
 
 .grid-container {
     display: grid;
-    grid-template-rows: 50px auto 60px 75px;
+    grid-template-rows: 50px auto 60px 30px 75px;
     grid-template-columns: auto;
     grid-gap: 5px;
     overflow: hidden;
@@ -84,7 +84,9 @@ text {
     transition: font-size 0.2s;
 }
 
+.text-name.selected,
 .text-name:hover {
+    fill: rgb(136, 80, 136);
     font-size: 24px;
 }
 circle {

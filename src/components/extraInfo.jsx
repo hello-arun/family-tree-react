@@ -3,7 +3,11 @@ class ExtraInfo extends Component {
     render() {
         const { node } = this.props;
         if (node === null) {
-            return <span className=".centered-text">Select any text for extra info!</span>;
+            return (
+                <span className=".centered-text">
+                    Select any text for extra info!
+                </span>
+            );
         }
         let mother = "--";
         let father = "--";
@@ -14,7 +18,8 @@ class ExtraInfo extends Component {
         return (
             <React.Fragment>
                 <span className="node-extra-info">
-                    {node.person.name}, Mother: Smt. {mother}, Father: Sh. {father}
+                    {node.person.name}, Mother: Smt. {mother}, Father: Sh.{" "}
+                    {father}
                 </span>
             </React.Fragment>
         );

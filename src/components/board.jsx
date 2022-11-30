@@ -8,19 +8,18 @@ import { beautifyTree } from "../helpers/tidyTree";
 import ExtraInfo from "./extraInfo";
 
 class Board extends Component {
+    history = [];
     state = {
-        rootNode: this.initNodes(),
+        rootId: setting.rootId,
+        maxLevel: setting.maxLevel,
+        rootNode: this.initNodes(setting.rootId, setting.maxLevel),
         extraInfoNode: null,
     };
 
-    initNodes() {
-        // console.log("Gi");
-        const { rootId, maxLevel } = setting;
+    initNodes(rootId, maxLevel) {
         let person = generateTree(rootId, maxLevel);
         let rootNode = generateNodes(person, maxLevel);
         beautifyTree(rootNode);
-        // console.log(rootNode);
-
         return rootNode;
     }
 
@@ -49,25 +48,17 @@ class Board extends Component {
     }
 
     handlePointerEnter = (node) => {
-        // const rootNode = rootNode;
+        const { extraInfoNode } = this.state;
+        if (extraInfoNode !== null) extraInfoNode.selected = false;
         node.selected = true;
-        // let footerNote = node.person.name;
-        // if (node.parent === null) {
-        //     footerNote += ", Mother: --, Father: --";
-        // } else {
-        //     footerNote += `<br />Mother: Smt. ${node.person.mother.name}\nFather: Sh. ${node.person.father.name}`;
-        // }
-        // const footerNote = `${node.person.name}, Mother: Smt. ${node.person.mother.name}, Father: Sh. ${node.person.father.name}`;
         this.setState({
             rootNode: this.state.rootNode,
             extraInfoNode: node,
         });
     };
     handlePointerLeave = (node) => {
-        node.selected = false;
-
-        // const rootNode = rootNode;
-        // const footerNote = `Name: ${node.person.name}, Mother: ${node.person.mother.name}, Father: ${node.person.father.name}`;
+        const { extraInfoNode } = this.state;
+        if (extraInfoNode !== null) extraInfoNode.selected = false;
         this.setState({
             rootNode: this.state.rootNode,
             extraInfoNode: null,
@@ -94,13 +85,69 @@ class Board extends Component {
         };
     }
 
+    handleMakeRoot = () => {
+        const { extraInfoNode } = this.state;
+        if (extraInfoNode === null) return;
+        this.history.push({
+            rootId: this.state.rootId,
+            maxLevel: this.state.maxLevel,
+        });
+
+        const rootId = extraInfoNode.person.id;
+        const maxLevel = this.state.maxLevel;
+        this.setState({
+            rootId: rootId,
+            maxLevel: maxLevel,
+            rootNode: this.initNodes(rootId, maxLevel),
+            extraInfoNode: null,
+        });
+        // const rootId = extraInfoNode.person.id
+        // const maxLevel = this.state.maxLevel
+    };
+
+    handlePlusMinus = (increment) => {
+        const { rootId, maxLevel, extraInfoNode } = this.state;
+        if (increment < 0 && maxLevel < 1) return;
+        if (increment > 0 && maxLevel > 12) return;
+        this.history.push({
+            rootId: this.state.rootId,
+            maxLevel: this.state.maxLevel,
+        });
+        // console.log(increment);
+        this.setState({
+            rootId: rootId,
+            maxLevel: maxLevel + increment,
+            rootNode: this.initNodes(rootId, maxLevel + increment),
+            extraInfoNode: extraInfoNode,
+        });
+    };
+
+    handleUndo = () => {
+        if (!this.history.length) return;
+        const { rootId, maxLevel } = this.history.pop();
+        this.setState({
+            rootId: rootId,
+            maxLevel: maxLevel,
+            rootNode: this.initNodes(rootId, maxLevel),
+            extraInfoNode: null,
+        });
+    };
+
     render() {
-        const allNodes = this.getNodeArray(this.state.rootNode, setting.maxLevel);
+        const allNodes = this.getNodeArray(
+            this.state.rootNode,
+            this.state.maxLevel
+        );
         const { xmin, xmax, ymin, ymax } = this.calcBounds(allNodes);
         const margin = 50;
         return (
             <React.Fragment>
-                <div className="grid-item-tree">
+                <div
+                    className="grid-item-tree"
+                    onPointerUp={() => {
+                        this.handlePointerLeave();
+                    }}
+                >
                     <svg
                         className="svg-tree"
                         id="main-board"
@@ -120,6 +167,14 @@ class Board extends Component {
                 </div>
                 <div className="grid-item-info">
                     <ExtraInfo node={this.state.extraInfoNode}></ExtraInfo>
+                </div>
+                <div className="grid-item-info">
+                    <button onClick={this.handleMakeRoot}>Make root</button>{" "}
+                    <button onClick={this.handleUndo}>Undo</button>
+                    {" Generations "}
+                    <button onClick={() => this.handlePlusMinus(1)}>+</button>
+                    {" " + (this.state.maxLevel + 1) + " "}
+                    <button onClick={() => this.handlePlusMinus(-1)}>-</button>
                 </div>
             </React.Fragment>
         );
