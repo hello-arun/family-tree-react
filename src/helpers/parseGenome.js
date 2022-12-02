@@ -30,8 +30,8 @@ export function generateTree(rootId, maxLevel = 0) {
                 const partener = new Person(pid, name, sex)
                 let children = []
                 childrenIds.forEach(cid => {
-                    const { name, sex } = genomeMap.get(cid)
-                    let child = new Person(cid, name, sex)
+                    const { name, sex,description } = genomeMap.get(cid)
+                    let child = new Person(cid, name, sex,description)
                     children.push(child)
                 });
                 person.addRelationship(partener, children)

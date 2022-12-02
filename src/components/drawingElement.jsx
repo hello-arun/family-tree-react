@@ -18,11 +18,11 @@ class PersonSVG extends Component {
             node.selected || (node.parent && node.parent.selected)
                 ? "selected"
                 : "";
-        const circleClass = node.parent ? "" : " root-circle";
+        const circleClass = node.parent.person ? "" : " root-circle";
         const textStyle = node.selected ? "text-name selected" : "text-name";
         return (
             <React.Fragment>
-                if (node.parent!==null)
+                if (node.parent.person!==null)
                 {
                     <line
                         x1={x1}

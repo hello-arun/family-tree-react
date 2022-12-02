@@ -19,7 +19,7 @@ class ExtraInfo extends Component {
             <React.Fragment>
                 <span className="node-extra-info">
                     {node.person.name}, Mother: Smt. {mother}, Father: Sh.{" "}
-                    {father}
+                    {father}, ({node.person.description})
                 </span>
             </React.Fragment>
         );

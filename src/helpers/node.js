@@ -1,23 +1,29 @@
+import { Hierarchy } from "./hierarchy";
+
 /**
  * An Abstract Node class for handeling tidyTree drawing algorithm
  */
- export class Node {
+export class Node extends Hierarchy {
     constructor(person) {
+        super()
         this.person = person // To bind data to this node
         this.children = null;
         this.parent = null;
         this.x = 0;
         this.y = 0;
         this.level = 0;
-        this.prelim = 0; // Prelim x cord
-        this.mod = 0; // Modifer
-        this.thread = null;
-        this.ancestor = this;
-        this.number = -1;
+        this.A = null; //default ancestor
+        this.z = 0; // Prelim x cord
+        this.m = 0; // Modifer
+        this.t = null;
+        this.a = this;
+        this.i = -1;
 
-        this.change = 0
-        this.shift = 0
-        this.selected = false;
+        this.c = 0
+        this.s = 0
+
+        // this.r = 0;
+        // this.th = 0;
 
         this.isLeaf = () => {
             return this.children === null || this.children.length === 0;
@@ -85,6 +91,7 @@
          * @param {Node []} children 
          */
         this.setChildren = (children) => {
+            if (children.length === 0) return
             this.children = children
             children.forEach(child => {
                 child.parent = this
@@ -92,3 +99,9 @@
         }
     }
 }
+
+// Node.prototype.eachAfter = eachAfter
+// Node.prototype.eachBefore = eachBefore
+
+
+

@@ -4,7 +4,7 @@ export class Person {
      * @param {String} name Name of the person
      * @param {String} sex Gender of person m/f
      */
-    constructor(id, name, sex) {
+    constructor(id, name, sex,description=null) {
         this.id = id
         this.name = name
         this.sex = sex
@@ -12,9 +12,7 @@ export class Person {
         this.mother = null
         this.haveChildren = false // if this person have any children or not
         this.relationships = null
-        this.description = {
-            "dob": "",
-        }
+        this.description = description
 
         /**
          * This function add relationship to the person
