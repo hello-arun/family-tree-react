@@ -3,7 +3,7 @@
 This project was bootstrapped with `create vite`. The create-vite version was `create-vite@3.2.1`.
 
 ```bash
-cd kakhwal-family-tree
+cd family-tree-react
 npm create vite
 ```
 
