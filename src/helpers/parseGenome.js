@@ -14,7 +14,6 @@ genomeData.forEach(entry => {
 
 export function getParentId(memberId, parentIdentifier = "father") {
     let memberData = genomeMap.get(memberId)
-    console.log(memberData)
     if (parentIdentifier === 'father' && memberData.fatherId) {
         return memberData.fatherId;
     } else if (parentIdentifier == 'mother' && memberData.motherId) {
@@ -51,7 +50,6 @@ export function generateTree(rootId, maxDepth = 0) {
     return root
 }
 
-
 /**
  * 
  * @param {Person} person 
@@ -79,4 +77,25 @@ export function generateNodes(person, maxDepth = 0) {
         currDepth += 1
     }
     return root
+}
+
+
+export function calcBounds(allNodes) {
+    let xmin = allNodes[0].x;
+    let ymin = allNodes[0].y;
+    let xmax = xmin;
+    let ymax = ymin;
+    allNodes.forEach((node) => {
+        xmin = node.x < xmin ? node.x : xmin;
+        xmax = node.x > xmax ? node.x : xmax;
+
+        ymin = node.y < ymin ? node.y : ymin;
+        ymax = node.y > ymax ? node.y : ymax;
+    });
+    return {
+        xmin: xmin,
+        xmax: xmax,
+        ymin: ymin,
+        ymax: ymax,
+    };
 }

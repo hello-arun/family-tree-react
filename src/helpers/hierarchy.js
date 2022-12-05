@@ -29,5 +29,15 @@ export class Hierarchy {
             }
             return this;
         }
+
+        this.expandToArray = () => {
+            var node = this, nodes = [node], next = [], children, i, n, index = -1;
+            while (node = nodes.shift()) {
+                next.push(node);
+                (children = node.children) &&
+                    children.forEach(child => nodes.push(child))
+            }
+            return next;
+        }
     }
 }

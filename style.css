@@ -110,7 +110,9 @@ text {
 circle {
     fill: var(--color2);
     stroke: var(--color3);
+    /* r: 11; */
     /* r: 5; */
+    transition: r 1s, fill 1s;
 }
 
 circle.f {
@@ -118,6 +120,7 @@ circle.f {
 }
 circle.root-circle {
     r: 11;
+    /* transition: r 1s, color 1s; */
     /* fill: yellow; */
 }
 
@@ -171,14 +174,11 @@ a:hover {
     background-color: var(--color4);
 }
 
-circle.cncentric-circle {
+circle.generation-circles{
     stroke: #b9b65648;
     stroke-width: 1;
     fill: none;
     stroke-dasharray: 10;
-
-    /* border: 1px dashed; */
-    /* r:50; */
 }
 
 .contact-info {
