@@ -1,56 +1,37 @@
 # Kakhwal Family Tree
 
-This project was bootstrapped with `create-react-app`.
-```bash
-cd kakhwal-family-tree
-create-react-app .
-```
+This project was bootstrapped with `create vite`. The create-vite version was `create-vite@3.2.1`.
 
-To install the development environment to contribute to the project you can use
 ```bash
 cd kakhwal-family-tree
-npm install
+npm create vite
 ```
 
 ## Available Scripts
 
 In the project directory, you can run:
 
-### `npm start`
+### `npm install`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+For setting up the development environment. This will download all the required modules to be used for this project. This is a one time process.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### `npm run dev`
 
-### `npm test`
+Runs the app in the development mode.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## `npm run dev -- --host`
 
-### `npm run build`
+Run the app in development mode and also expose to the network so that you can also see the web view on you mobile connected to same wifi.
 
-***Do not forget to add `homepage` property in `package.json` to deploy it to the web.***
-```json
-"homepage": "https://hello-arun.github.io/family-tree",
+
+## `npm run build` 
+
+Builds the app for production to the `build` folder.
+
+***I have to add following line in the vite.config.js to deploy it to the web.***
+```js
+  base: '/family-tree/'
 ```
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
 ## VS-code extensions
 
