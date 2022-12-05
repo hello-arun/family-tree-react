@@ -25,6 +25,8 @@ tree.forEach(person => {
     if (!person.relationships) return
     person.relationships.forEach(relationship => {
         delete relationship.direction
+        relationship.childrenIds = relationship.children
+        delete relationship.children
         const partnerId = relationship.partnerId
         if (!relationship.children || !relationship.children.length) return
         let children = relationship.children

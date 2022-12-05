@@ -24,35 +24,31 @@ export function getParentId(memberId, parentIdentifier = "father") {
     return null
 }
 
-export function generateTree(rootId, maxLevel = 0) {
+export function generateTree(rootId, maxDepth = 0) {
 
     let rootData = genomeMap.get(rootId)
     const root = new Person(rootId, rootData.name, rootData.sex)
-    let level = 0
+    let currDepth = 0
     let toExpand = [root]
-    while (level < maxLevel) {
-        let toExpandNext = []
-        toExpand.forEach(person => {
+    while (currDepth < maxDepth) {
+        let numPersonCurrDepth = toExpand.length
+        while (--numPersonCurrDepth >= 0) {
+            let person = toExpand.shift()
             const personData = genomeMap.get(person.id)
-            if (!personData.relationships) {
-                return;
-            }
-            personData.relationships.forEach(relation => {
-                const { partnerId: pid, children: childrenIds } = relation
-                const { name, sex } = genomeMap.get(pid)
-                const partener = new Person(pid, name, sex)
-                let children = []
-                childrenIds.forEach(cid => {
+            const { relationships } = personData
+            relationships && relationships.forEach(relation => {
+                const { partnerId, childrenIds } = relation
+                const { name, sex } = genomeMap.get(partnerId)
+                const partener = new Person(partnerId, name, sex)
+                let children = childrenIds.map(cid => {
                     const { name, sex, description } = genomeMap.get(cid)
-                    let child = new Person(cid, name, sex, description)
-                    children.push(child)
-                });
+                    return new Person(cid, name, sex, description)
+                })
                 person.addRelationship(partener, children)
-                toExpandNext = [...toExpandNext, ...children]
+                toExpand = [...toExpand, ...children]
             });
-        });
-        level += 1
-        toExpand = [...toExpandNext]
+        }
+        currDepth += 1
     }
     return root
 }
@@ -61,31 +57,28 @@ export function generateTree(rootId, maxLevel = 0) {
 /**
  * 
  * @param {Person} person 
- * @param {Number} maxLevel 
+ * @param {Number} maxDepth 
  */
-export function generateNodes(person, maxLevel = 0) {
+export function generateNodes(person, maxDepth = 0) {
     const root = new Node(person)
-    let level = 0
+    let currDepth = 0
     let toExpand = [root]
-    while (level < maxLevel) {
-        let toExpandNext = []
-        toExpand.forEach(node => {
+    while (currDepth < maxDepth) {
+        let numPersonCurrDepth = toExpand.length
+        while (--numPersonCurrDepth >= 0) {
+            let node = toExpand.shift()
             let allChildren = []
-            if (!node.person.relationships) {
-                return;
-            }
-            node.person.relationships.forEach(relation => {
+            const relationships = node.person.relationships
+            relationships && relationships.forEach(relation => {
                 const { children } = relation
                 children.forEach(child => {
                     allChildren.push(new Node(child))
                 });
-                toExpandNext = [...toExpandNext, ...allChildren]
+                toExpand = [...toExpand, ...allChildren]
                 node.setChildren(allChildren)
             });
-
-        });
-        level += 1
-        toExpand = [...toExpandNext]
+        }
+        currDepth += 1
     }
     return root
 }
