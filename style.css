@@ -28,7 +28,7 @@ body,
 
 .grid-container {
     display: grid;
-    grid-template-rows: 50px auto 60px 30px 75px;
+    grid-template-rows: 50px auto 60px 30px 55px;
     grid-template-columns: auto;
     grid-gap: 5px;
     overflow: hidden;
@@ -69,9 +69,27 @@ text {
     transition: stroke 0.3s, opacity 0.3s;
 }
 
+@keyframes dash {
+    0% {
+        stroke-dashoffset: 0;
+    }
+    100% {
+        stroke-dashoffset: 20;
+    } /* from { */
+    /* } */
+    /* to { */
+    /* stroke-dashoffset: 0; */
+    /* } */
+}
 .node-connection.selected {
-    stroke: var(--color5);
+    stroke: rgb(143, 60, 89);
     opacity: 1;
+    stroke-dasharray: 10;
+    stroke-dashoffset: 0;
+    animation: dash 1s linear infinite;
+}
+.toggle-button {
+    fill: rgb(222, 100, 120);
 }
 
 .text-name {
@@ -92,18 +110,27 @@ text {
 circle {
     fill: var(--color2);
     stroke: var(--color3);
-    r: 5;
-}
-
-circle.root-circle {
-    r: 10;
-    fill: yellow;
+    /* r: 5; */
 }
 
 circle.f {
     fill: rgb(222, 100, 120);
 }
+circle.root-circle {
+    r: 11;
+    /* fill: yellow; */
+}
 
+.controls {
+    display: inline-block;
+    stroke: 1px;
+    outline: 1px red;
+    padding: 2px;
+    border: 1px solid #3a3c266a;
+    margin-right: 5px;
+    font-size: 12px;
+    /* background-color: red; */
+}
 .grid-item-copyright,
 .grid-item-info,
 .grid-item-header {
@@ -142,6 +169,16 @@ a:hover {
 .grid-item-footer {
     color: #e8e1db;
     background-color: var(--color4);
+}
+
+circle.cncentric-circle {
+    stroke: #b9b65648;
+    stroke-width: 1;
+    fill: none;
+    stroke-dasharray: 10;
+
+    /* border: 1px dashed; */
+    /* r:50; */
 }
 
 .contact-info {

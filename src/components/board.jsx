@@ -1,8 +1,12 @@
 // This is an SVG element where all the drawing will happen
 // based on the JSON Tree Structure
 import React, { Component } from "react";
-import setting from "../data/setting.json";
-import { generateNodes, generateTree } from "../helpers/parseGenome";
+import { ROOT_ID, NUM_GEN, _R } from "../settings";
+import {
+    generateNodes,
+    generateTree,
+    getParentId,
+} from "../helpers/parseGenome";
 import PersonSVG from "./drawingElement";
 import { beautifyTree } from "../helpers/tidyTree";
 import ExtraInfo from "./extraInfo";
@@ -10,14 +14,14 @@ import ExtraInfo from "./extraInfo";
 class Board extends Component {
     history = [];
     state = {
-        rootId: setting.rootId,
-        maxLevel: setting.maxLevel,
-        rootNode: this.initNodes(setting.rootId, setting.maxLevel),
+        rootId: ROOT_ID,
+        maxLevel: NUM_GEN,
+        rootNode: this.initNodes(ROOT_ID, NUM_GEN),
         extraInfoNode: null,
     };
 
-    initNodes(rootId, maxLevel) {
-        let person = generateTree(rootId, maxLevel);
+    initNodes(rootId, maxLevel, parent = null) {
+        let person = generateTree(rootId, maxLevel, parent);
         let rootNode = generateNodes(person, maxLevel);
         beautifyTree(rootNode);
         return rootNode;
@@ -56,6 +60,7 @@ class Board extends Component {
             extraInfoNode: node,
         });
     };
+
     handlePointerLeave = (node) => {
         const { extraInfoNode } = this.state;
         if (extraInfoNode !== null) extraInfoNode.selected = false;
@@ -86,7 +91,7 @@ class Board extends Component {
     }
 
     handleMakeRoot = () => {
-        const { extraInfoNode } = this.state;
+        const { extraInfoNode, maxLevel } = this.state;
         if (extraInfoNode === null) return;
         this.history.push({
             rootId: this.state.rootId,
@@ -94,11 +99,28 @@ class Board extends Component {
         });
 
         const rootId = extraInfoNode.person.id;
-        const maxLevel = this.state.maxLevel;
         this.setState({
             rootId: rootId,
-            maxLevel: maxLevel,
             rootNode: this.initNodes(rootId, maxLevel),
+            extraInfoNode: null,
+        });
+    };
+
+    handleParent = (parentIdentifier) => {
+        const { extraInfoNode } = this.state;
+        if (extraInfoNode === null) return;
+        const parentId = getParentId(extraInfoNode.person.id, parentIdentifier);
+        if (parentId === null) return;
+
+        this.history.push({
+            rootId: this.state.rootId,
+            maxLevel: this.state.maxLevel,
+        });
+
+        const rootNode = this.initNodes(parentId, this.state.maxLevel);
+        this.setState({
+            rootId: parentId,
+            rootNode: rootNode,
             extraInfoNode: null,
         });
         // const rootId = extraInfoNode.person.id
@@ -106,19 +128,16 @@ class Board extends Component {
     };
 
     handlePlusMinus = (increment) => {
-        const { rootId, maxLevel, extraInfoNode } = this.state;
+        const { rootId, maxLevel } = this.state;
         if (increment < 0 && maxLevel < 1) return;
         if (increment > 0 && maxLevel > 12) return;
         this.history.push({
             rootId: this.state.rootId,
             maxLevel: this.state.maxLevel,
         });
-        // console.log(increment);
         this.setState({
-            rootId: rootId,
             maxLevel: maxLevel + increment,
             rootNode: this.initNodes(rootId, maxLevel + increment),
-            extraInfoNode: extraInfoNode,
         });
     };
 
@@ -140,6 +159,10 @@ class Board extends Component {
         );
         const { xmin, xmax, ymin, ymax } = this.calcBounds(allNodes);
         const margin = 50;
+        let circles = new Array(this.state.maxLevel + 1);
+        for (let i = 0; i < this.state.maxLevel; i++) {
+            circles[i] = i;
+        }
         return (
             <React.Fragment>
                 <div
@@ -155,6 +178,19 @@ class Board extends Component {
                             xmax - xmin + margin * 2
                         } ${ymax - ymin + margin * 2}`}
                     >
+                        <g>
+                            {circles.map((c) => (
+                                <circle
+                                    className="cncentric-circle"
+                                    cx="0"
+                                    cy="0"
+                                    r={(1 + c) * _R}
+                                    key={c}
+                                ></circle>
+                                // <text>khkhjkhkjkh</text>
+                                // <circle cx="0" cy="0" r={c * _R} key={"jhg"+c}></circle>
+                            ))}
+                        </g>
                         {allNodes.map((node) => (
                             <PersonSVG
                                 key={node.person.id}
@@ -169,12 +205,22 @@ class Board extends Component {
                     <ExtraInfo node={this.state.extraInfoNode}></ExtraInfo>
                 </div>
                 <div className="grid-item-info">
-                    <button onClick={this.handleMakeRoot}>Make root</button>{" "}
-                    <button onClick={this.handleUndo}>Undo</button>
-                    {" Generations "}
-                    <button onClick={() => this.handlePlusMinus(1)}>+</button>
-                    {" " + (this.state.maxLevel + 1) + " "}
+                    <div className="controls">
+                        {"Set Root "}
+                        <button onClick={this.handleMakeRoot}>Self</button>{" "}
+                        <button onClick={() => this.handleParent("father")}>
+                            Father
+                        </button>{" "}
+                        <button onClick={() => this.handleParent("mother")}>
+                            Mother
+                        </button>{" "}
+                    </div>
+                    <button onClick={this.handleUndo}>Undo</button>{" "}
                     <button onClick={() => this.handlePlusMinus(-1)}>-</button>
+                    {" " + (this.state.maxLevel + 1) + " "}
+                    <button onClick={() => this.handlePlusMinus(1)}>
+                        +
+                    </button>{" "}
                 </div>
             </React.Fragment>
         );

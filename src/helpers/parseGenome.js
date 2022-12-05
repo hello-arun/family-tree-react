@@ -1,4 +1,4 @@
-import { genomeData } from "../data/genome.js";
+import { genomeData } from "../data/genome";
 import { Person } from "./person.js";
 import { Node } from "./node.js";
 /**
@@ -7,13 +7,26 @@ import { Node } from "./node.js";
  * @param {Number} maxLevel 
  * @returns 
  */
+const genomeMap = new Map();
+// console.log(genomeData)
+genomeData.forEach(entry => {
+    genomeMap.set(entry.id, entry)
+});
+
+export function getParentId(memberId, parentIdentifier = "father") {
+    // if (memberId === null) return null
+    let memberData = genomeMap.get(memberId)
+    if (parentIdentifier === 'father' && memberData.father) {
+        return memberData.father;
+    } else if (parentIdentifier == 'mother' && memberData.mother) {
+        return memberData.mother;
+    }
+    return null
+}
+
 export function generateTree(rootId, maxLevel = 0) {
-    const genomeMap = new Map();
-    // console.log(genomeData)
-    genomeData.forEach(entry => {
-        genomeMap.set(entry.id, entry)
-    });
-    const rootData = genomeMap.get(rootId)
+
+    let rootData = genomeMap.get(rootId)
     const root = new Person(rootId, rootData.name, rootData.sex)
     let level = 0
     let toExpand = [root]
@@ -30,8 +43,8 @@ export function generateTree(rootId, maxLevel = 0) {
                 const partener = new Person(pid, name, sex)
                 let children = []
                 childrenIds.forEach(cid => {
-                    const { name, sex,description } = genomeMap.get(cid)
-                    let child = new Person(cid, name, sex,description)
+                    const { name, sex, description } = genomeMap.get(cid)
+                    let child = new Person(cid, name, sex, description)
                     children.push(child)
                 });
                 person.addRelationship(partener, children)

@@ -1,7 +1,7 @@
 import { Node } from "./node.js";
-
+import { SIBLINGSEP, COUSINSEP, _R, _ST } from "../settings.js";
 function separation(a, b) {
-    return (a.parent === b.parent ? 1 : 1.1) / a.level;
+    return (a.parent === b.parent ? SIBLINGSEP : COUSINSEP) / a.level;
 }
 
 function nextLeft(v) {
@@ -98,10 +98,10 @@ export function beautifyTree(root) {
 // }
 
 function toRadial(v) {
-    const r = 120, x = v.x * 0.48
+    const x = v.x * _ST
     // v.th = v.x
-    v.x = r * v.level * Math.cos(x + Math.PI / 4)
-    v.y = r * v.level * Math.sin(x + Math.PI / 4)
+    v.x = _R * v.level * Math.cos(x + Math.PI / 4)
+    v.y = _R * v.level * Math.sin(x + Math.PI / 4)
 }
 
 // To to keep the plot spread in the given theta range
