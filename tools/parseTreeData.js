@@ -25,15 +25,15 @@ tree.forEach(person => {
     if (!person.relationships) return
     person.relationships.forEach(relationship => {
         const partnerId = relationship.partnerId
-        if (!relationship.children || !relationship.children.length) return
+        // if (!relationship.children || !relationship.children.length) return
         let childrenIds = relationship.children
         childrenIds && childrenIds.forEach(childId => {
             child = treeMap.get(childId)
             child.fatherId = person.sex === "m" ? person.id : partnerId
             child.motherId = person.sex === "f" ? person.id : partnerId
         })
-        
-        
+
+
         relationship.childrenIds = relationship.children
         delete relationship.direction
         delete relationship.children

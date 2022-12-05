@@ -1076,8 +1076,7 @@
             "relationships": [
                 {
                     "partnerId": "6434addd-bdf0-9549-0ad9-e8b753ee46fb",
-                    "direction": "to",
-                    "children": []
+                    "childrenIds": []
                 }
             ],
             "fatherId": "34e0fc1e-040e-76ac-261a-92d477a142b2",
@@ -1091,8 +1090,7 @@
             "relationships": [
                 {
                     "partnerId": "3fbd8ee8-6d15-60dd-b880-d26ba0f37316",
-                    "direction": "from",
-                    "children": []
+                    "childrenIds": []
                 }
             ]
         },
@@ -1732,8 +1730,7 @@
             "relationships": [
                 {
                     "partnerId": "26480433-24e5-61f5-5cda-1e0262a1ba8b",
-                    "direction": "to",
-                    "children": []
+                    "childrenIds": []
                 }
             ],
             "fatherId": "e2f547ff-3e19-30bf-94f8-fc2ea99d3f99",
@@ -1771,8 +1768,7 @@
             "relationships": [
                 {
                     "partnerId": "a65e0c7d-685f-b0eb-8d22-5a12970e0b0c",
-                    "direction": "to",
-                    "children": []
+                    "childrenIds": []
                 }
             ],
             "fatherId": "e2f547ff-3e19-30bf-94f8-fc2ea99d3f99",
@@ -1786,8 +1782,7 @@
             "relationships": [
                 {
                     "partnerId": "fe5ca637-8370-185e-0639-a6d0e091bc84",
-                    "direction": "from",
-                    "children": []
+                    "childrenIds": []
                 }
             ]
         },
@@ -2589,8 +2584,7 @@
             "relationships": [
                 {
                     "partnerId": "01ad92f6-d24d-7407-35e6-8c3b54094aa3",
-                    "direction": "from",
-                    "children": []
+                    "childrenIds": []
                 }
             ]
         }
