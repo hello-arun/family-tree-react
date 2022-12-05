@@ -8,13 +8,11 @@ import { Node } from "./node.js";
  * @returns 
  */
 const genomeMap = new Map();
-// console.log(genomeData)
 genomeData.forEach(entry => {
     genomeMap.set(entry.id, entry)
 });
 
 export function getParentId(memberId, parentIdentifier = "father") {
-    // if (memberId === null) return null
     let memberData = genomeMap.get(memberId)
     if (parentIdentifier === 'father' && memberData.father) {
         return memberData.father;
@@ -25,7 +23,6 @@ export function getParentId(memberId, parentIdentifier = "father") {
 }
 
 export function generateTree(rootId, maxDepth = 0) {
-
     let rootData = genomeMap.get(rootId)
     const root = new Person(rootId, rootData.name, rootData.sex)
     let currDepth = 0
@@ -74,9 +71,9 @@ export function generateNodes(person, maxDepth = 0) {
                 children.forEach(child => {
                     allChildren.push(new Node(child))
                 });
-                toExpand = [...toExpand, ...allChildren]
-                node.setChildren(allChildren)
             });
+            toExpand = [...toExpand, ...allChildren]
+            node.setChildren(allChildren)
         }
         currDepth += 1
     }
