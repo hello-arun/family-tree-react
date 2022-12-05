@@ -1,4 +1,4 @@
-# Kakhwal Family Tree
+# Family Tree
 
 This project was bootstrapped with `create vite`. The create-vite version was `create-vite@3.2.1`.
 
