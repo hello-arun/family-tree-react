@@ -24,17 +24,19 @@ tree.forEach(person => {
 tree.forEach(person => {
     if (!person.relationships) return
     person.relationships.forEach(relationship => {
-        delete relationship.direction
-        relationship.childrenIds = relationship.children
-        delete relationship.children
         const partnerId = relationship.partnerId
         if (!relationship.children || !relationship.children.length) return
-        let children = relationship.children
-        children.forEach(childId => {
+        let childrenIds = relationship.children
+        childrenIds && childrenIds.forEach(childId => {
             child = treeMap.get(childId)
-            child.father = person.sex === "m" ? person.id : partnerId
-            child.mother = person.sex === "f" ? person.id : partnerId
+            child.fatherId = person.sex === "m" ? person.id : partnerId
+            child.motherId = person.sex === "f" ? person.id : partnerId
         })
+        
+        
+        relationship.childrenIds = relationship.children
+        delete relationship.direction
+        delete relationship.children
     })
 })
 const finalData = { genomeData: tree }

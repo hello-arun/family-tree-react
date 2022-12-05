@@ -14,10 +14,11 @@ genomeData.forEach(entry => {
 
 export function getParentId(memberId, parentIdentifier = "father") {
     let memberData = genomeMap.get(memberId)
-    if (parentIdentifier === 'father' && memberData.father) {
-        return memberData.father;
-    } else if (parentIdentifier == 'mother' && memberData.mother) {
-        return memberData.mother;
+    console.log(memberData)
+    if (parentIdentifier === 'father' && memberData.fatherId) {
+        return memberData.fatherId;
+    } else if (parentIdentifier == 'mother' && memberData.motherId) {
+        return memberData.motherId;
     }
     return null
 }
