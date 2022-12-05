@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 
 class PersonSVG extends Component {
-    // state = {};
     render() {
         const { node } = this.props;
         const x1 = node.x;
@@ -44,7 +43,7 @@ class PersonSVG extends Component {
                         x={0}
                         y={0}
                         onPointerDown={(event) => {
-                            this.props.onPointerEnter(node);
+                            this.props.onPointerDown(node);
                         }}
                         onPointerUp={(event) => {
                             event.stopPropagation();

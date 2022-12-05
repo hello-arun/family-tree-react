@@ -12,12 +12,7 @@ import { beautifyTree } from "../helpers/tidyTree";
 import ExtraInfo from "./extraInfo";
 
 function Board(){
-    history = [];
-    const [rootId,setRootId] = useState(_rootID)
-    const [maxDepth, setMaxDepth] = useState(_maxDepth)
-    const [rootNode,setRootNode] = useState(initNodes(_rootID,_maxDepth))
-    const [selectedNode,setSelectedNode] = useState(null)
-    const margin = 50;
+
 
    const initNodes = (rootId, maxDepth, parent = null) => {
         let person = generateTree(rootId, maxDepth, parent);
@@ -67,7 +62,7 @@ function Board(){
         });
     };
 
-    const calcBounds = (allNodes) => {
+    const calcBounds = () => {
         let xmin = allNodes[0].x;
         let ymin = allNodes[0].y;
         let xmax = xmin;
@@ -148,8 +143,7 @@ function Board(){
     };
 
     return (
-        const { xmin, xmax, ymin, ymax } = calcBounds(allNodes);
-        let circles = Array.from(Array(maxLevel+1).keys())
+
         return (
             <React.Fragment>
                 <div
