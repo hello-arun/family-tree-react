@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 class PersonSVG extends Component {
+    // state = {};
     render() {
         const { node } = this.props;
         const x1 = node.x;
@@ -21,8 +22,8 @@ class PersonSVG extends Component {
         const textStyle = node.selected ? "text-name selected" : "text-name";
         return (
             <React.Fragment>
-                if (node.parent.person!==null)
-                {
+                 {node.parent.person &&
+                (
                     <line
                         x1={x1}
                         y1={y1}
@@ -30,7 +31,7 @@ class PersonSVG extends Component {
                         y2={y2}
                         className={`${lineClass}`}
                     ></line>
-                }
+                )}
                 <circle
                     cx={x1}
                     cy={y1}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { _R } from "../settings";
 function GenerationCircles(props) {
     const { numGeneration } = props;

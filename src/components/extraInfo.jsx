@@ -11,7 +11,6 @@ class ExtraInfo extends Component {
         }
         let mother = "--";
         let father = "--";
-        // let partnerInfo =""
         mother = node.person.mother ? node.person.mother.name : "--";
         father = node.person.father ? node.person.father.name : "--";
 

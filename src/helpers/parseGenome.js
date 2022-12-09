@@ -1,6 +1,7 @@
 import { genomeData } from "../data/genome";
 import { Person } from "./person.js";
 import { Node } from "./node.js";
+import { beautifyTree } from "./tidyTree";
 /**
  * 
  * @param {String} rootId 
@@ -16,7 +17,7 @@ export function getParentId(memberId, parentIdentifier = "father") {
     let memberData = genomeMap.get(memberId)
     if (parentIdentifier === 'father' && memberData.fatherId) {
         return memberData.fatherId;
-    } else if (parentIdentifier == 'mother' && memberData.motherId) {
+    } else if (parentIdentifier === 'mother' && memberData.motherId) {
         return memberData.motherId;
     }
     return null
@@ -98,4 +99,13 @@ export function calcBounds(allNodes) {
         ymin: ymin,
         ymax: ymax,
     };
+}
+
+
+export function initNodes(rootId, maxDepth) {
+    console.log("Called Init Node");
+    let person = generateTree(rootId, maxDepth, parent);
+    let rootNode = generateNodes(person, maxDepth);
+    beautifyTree(rootNode);
+    return rootNode;
 }
